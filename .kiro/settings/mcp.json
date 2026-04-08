@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "stitch": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "--header",
+        "X-Goog-Api-Key: AQ.Ab8RN6Lg6eP04YfXuAPc1X5Nkd8Bmus1p5OMG-zUmmp0RIEoNg",
+        "https://stitch.googleapis.com/mcp"
+      ],
+      "disabled": false
+    }
+  }
+}
