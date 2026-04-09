@@ -1,0 +1,244 @@
+/**
+ * Sidebar Styles - Editorial Geometry Navigation Panel
+ * 
+ * Implements fixed left navigation with brand header, geometric triangle accents,
+ * and tonal layering following Editorial Geometry design principles.
+ */
+
+@import '../../../shared/styles/design-tokens';
+@import '../../../shared/styles/mixins';
+
+.sidebar {
+  // Full height container
+  height: 100%;
+  width: 100%;
+  
+  // Editorial Geometry surface hierarchy
+  @include surface-layer('container-low');
+  
+  // Vertical layout with proper spacing
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-xl);
+  
+  // Subtle shadow for depth
+  @include editorial-shadow('subtle');
+}
+
+// Brand Header Section
+.sidebar__brand-header {
+  position: relative;
+  margin-bottom: var(--spacing-xl);
+  
+  .brand-triangle-accent {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 60px;
+    height: 60px;
+    z-index: 0;
+    
+    // Geometric triangle styling
+    @include triangle-accent();
+    
+    // Placeholder triangle shape
+    &::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+      border-bottom: 52px solid var(--color-primary-blue-800);
+      opacity: 0.1;
+    }
+  }
+  
+  .brand-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+  
+  .brand-logo {
+    .logo-placeholder {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-primary-blue-700);
+      border-radius: var(--border-radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      // Placeholder icon
+      &::before {
+        content: '🏢';
+        font-size: 20px;
+      }
+    }
+  }
+  
+  .brand-text {
+    .brand-name {
+      @include typography('headline-md');
+      color: var(--color-primary-blue-900);
+      margin: 0;
+    }
+    
+    .brand-subtitle {
+      @include typography('body-md');
+      color: var(--color-neutral-slate-600);
+      margin: 0;
+      margin-top: 2px;
+    }
+  }
+}
+
+// Primary Navigation Section
+.sidebar__primary-nav {
+  margin-bottom: var(--spacing-xl);
+  
+  .nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+    &.secondary {
+      .nav-item {
+        .nav-link {
+          color: var(--color-neutral-slate-500);
+          
+          &:hover {
+            color: var(--color-neutral-slate-600);
+            background-color: var(--color-surface-container);
+          }
+        }
+      }
+    }
+  }
+  
+  .nav-item {
+    margin-bottom: var(--spacing-sm);
+    
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md) var(--spacing-lg);
+      text-decoration: none;
+      border-radius: var(--border-radius-md);
+      transition: all 0.3s ease;
+      
+      // Default inactive state
+      @include typography('body-md');
+      color: var(--color-neutral-slate-600);
+      font-weight: var(--font-weight-medium);
+      
+      // Hover state
+      &:hover {
+        background-color: var(--color-surface-container);
+        color: var(--color-primary-blue-800);
+      }
+      
+      // Active state (will be handled by Angular router)
+      &[aria-current="page"] {
+        background-color: var(--color-surface-container-lowest);
+        color: var(--color-accent-red-800);
+        font-weight: var(--font-weight-bold);
+        border-right: 4px solid var(--color-accent-red-800);
+        
+        @include editorial-shadow('subtle');
+      }
+      
+      // Focus state for accessibility
+      @include focus-indicator();
+      
+      .nav-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .nav-text {
+        flex: 1;
+      }
+    }
+  }
+}
+
+// Action Button Section
+.sidebar__action-button {
+  margin-bottom: var(--spacing-xl);
+  
+  .action-btn {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-primary-blue-800);
+    color: var(--color-white);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    // Typography
+    @include typography('label-sm');
+    
+    // Editorial shadow
+    @include editorial-shadow('button');
+    
+    // Hover state
+    &:hover {
+      background-color: var(--color-primary-blue-700);
+      transform: translateY(-1px);
+    }
+    
+    // Focus state
+    @include focus-indicator(var(--color-white));
+    
+    // Active state
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Secondary Navigation Section
+.sidebar__secondary-nav {
+  margin-top: auto;
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid var(--color-editorial-outline-variant);
+  opacity: var(--editorial-ghost-border-opacity);
+}
+
+// Responsive adjustments
+@include responsive('tablet') {
+  .sidebar {
+    // Maintain fixed width even on smaller screens
+    width: var(--layout-sidebar-width);
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .sidebar__primary-nav .nav-item .nav-link[aria-current="page"] {
+    border-right-width: 6px;
+    background-color: var(--color-surface-container-high);
+  }
+  
+  .sidebar__action-button .action-btn {
+    border: 2px solid var(--color-white);
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .sidebar__primary-nav .nav-item .nav-link,
+  .sidebar__action-button .action-btn {
+    transition: none;
+  }
+}

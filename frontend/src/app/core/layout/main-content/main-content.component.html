@@ -1,0 +1,56 @@
+<!--
+  Main Content Template - Tonal Layered Content Area
+  
+  Implements flexible content area with geometric accents, empty state,
+  and content projection following Editorial Geometry principles.
+-->
+
+<div class="main-content" role="main">
+  
+  <!-- Geometric Triangle Accents Background -->
+  <div class="geometric-accents">
+    <!-- Triangle accent shapes with breathing room -->
+    <div class="triangle-accent triangle-1"></div>
+    <div class="triangle-accent triangle-2"></div>
+    <div class="triangle-accent triangle-3"></div>
+  </div>
+  
+  <!-- Content Projection Area -->
+  <div class="content-area">
+    
+    <!-- Empty State Display -->
+    <div class="empty-state" *ngIf="isEmpty$ | async">
+      <div class="empty-state__content">
+        
+        <!-- Icon Container -->
+        <div class="empty-state__icon">
+          <span class="icon-placeholder">🎨</span>
+        </div>
+        
+        <!-- Heading -->
+        <h2 class="empty-state__heading">Workspace Canvas</h2>
+        
+        <!-- Description -->
+        <p class="empty-state__description">
+          This is your dynamic content area where feature modules will be displayed. 
+          The Editorial Geometry design system creates depth through tonal layering 
+          and geometric accents rather than harsh structural lines.
+        </p>
+        
+        <!-- Additional Info -->
+        <p class="empty-state__info">
+          Navigate using the sidebar to load different application sections, 
+          or use the search bar to find specific infrastructure items.
+        </p>
+        
+      </div>
+    </div>
+    
+    <!-- Router Outlet Content Projection -->
+    <div class="projected-content" [class.hidden]="isEmpty$ | async">
+      <ng-content></ng-content>
+    </div>
+    
+  </div>
+  
+</div>

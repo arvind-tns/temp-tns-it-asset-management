@@ -1,0 +1,241 @@
+/**
+ * Main Content Styles - Tonal Layered Content Area
+ * 
+ * Implements flexible content area with Editorial Geometry background system,
+ * geometric triangle accents, and empty state display.
+ */
+
+@import '../../../shared/styles/design-tokens';
+@import '../../../shared/styles/mixins';
+
+.main-content {
+  // Full area coverage
+  width: 100%;
+  height: 100%;
+  position: relative;
+  
+  // Editorial Geometry base surface
+  @include surface-layer('base');
+  
+  // Smooth scrolling for overflow content
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+// Geometric Triangle Accents Background
+.geometric-accents {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  
+  .triangle-accent {
+    position: absolute;
+    
+    // Base triangle styling
+    @include triangle-accent();
+    
+    // Individual triangle positioning with breathing room
+    &.triangle-1 {
+      top: var(--editorial-triangle-breathing-room);
+      right: var(--editorial-triangle-breathing-room);
+      width: 120px;
+      height: 120px;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 60px solid transparent;
+        border-right: 60px solid transparent;
+        border-bottom: 104px solid var(--color-primary-blue-800);
+        opacity: 0.08;
+      }
+    }
+    
+    &.triangle-2 {
+      bottom: calc(var(--editorial-triangle-breathing-room) * 2);
+      left: calc(var(--editorial-triangle-breathing-room) * 1.5);
+      width: 80px;
+      height: 80px;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 40px solid transparent;
+        border-right: 40px solid transparent;
+        border-bottom: 69px solid var(--color-primary-blue-800);
+        opacity: 0.06;
+        transform: rotate(45deg);
+      }
+    }
+    
+    &.triangle-3 {
+      top: 40%;
+      right: 20%;
+      width: 60px;
+      height: 60px;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        border-bottom: 52px solid var(--color-primary-blue-800);
+        opacity: 0.04;
+        transform: rotate(-30deg);
+      }
+    }
+  }
+}
+
+// Content Area
+.content-area {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100%;
+  
+  .projected-content {
+    width: 100%;
+    
+    &.hidden {
+      display: none;
+    }
+  }
+}
+
+// Empty State Styling
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: var(--spacing-xxl);
+  
+  &__content {
+    text-align: center;
+    max-width: 600px;
+    
+    // Elevated surface for pop effect
+    @include surface-layer('container-lowest');
+    padding: var(--spacing-xxxl);
+    border-radius: var(--border-radius-lg);
+    
+    // Editorial shadow for depth
+    @include editorial-shadow('editorial');
+  }
+  
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin-bottom: var(--spacing-xl);
+    
+    // Icon container styling
+    @include surface-layer('container');
+    border-radius: var(--border-radius-lg);
+    
+    .icon-placeholder {
+      font-size: 32px;
+    }
+  }
+  
+  &__heading {
+    @include typography('headline-lg');
+    color: var(--color-primary-blue-900);
+    margin: 0 0 var(--spacing-lg) 0;
+  }
+  
+  &__description {
+    @include typography('body-lg');
+    color: var(--color-editorial-on-surface);
+    margin: 0 0 var(--spacing-lg) 0;
+    line-height: 1.6;
+  }
+  
+  &__info {
+    @include typography('body-md');
+    color: var(--color-editorial-on-surface-variant);
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+// Responsive adjustments
+@include responsive('tablet') {
+  .geometric-accents {
+    .triangle-accent {
+      // Scale down triangles on smaller screens
+      &.triangle-1 {
+        width: 80px;
+        height: 80px;
+        
+        &::before {
+          border-left-width: 40px;
+          border-right-width: 40px;
+          border-bottom-width: 69px;
+        }
+      }
+      
+      &.triangle-2 {
+        width: 60px;
+        height: 60px;
+        
+        &::before {
+          border-left-width: 30px;
+          border-right-width: 30px;
+          border-bottom-width: 52px;
+        }
+      }
+      
+      &.triangle-3 {
+        width: 40px;
+        height: 40px;
+        
+        &::before {
+          border-left-width: 20px;
+          border-right-width: 20px;
+          border-bottom-width: 35px;
+        }
+      }
+    }
+  }
+  
+  .empty-state {
+    padding: var(--spacing-xl);
+    
+    &__content {
+      padding: var(--spacing-xl);
+    }
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .empty-state__content {
+    border: 2px solid var(--color-editorial-outline);
+  }
+  
+  .geometric-accents .triangle-accent::before {
+    opacity: 0.15; // Slightly more visible in high contrast
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .main-content {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,80 @@
+<!--
+  Top Navigation Template - Glassmorphism Navigation Bar
+  
+  Implements brand name, search bar, secondary navigation, and user controls
+  with glassmorphism effects and Editorial Geometry styling.
+-->
+
+<div class="top-nav" role="banner">
+  
+  <!-- Brand Name Section -->
+  <div class="top-nav__brand">
+    <h1 class="brand-name">AssetIntel</h1>
+  </div>
+  
+  <!-- Search Bar Section -->
+  <div class="top-nav__search">
+    <div class="search-container">
+      <div class="search-icon">🔍</div>
+      <input 
+        type="text" 
+        class="search-input"
+        placeholder="Search infrastructure..."
+        (input)="onSearchInput($event.target?.value || '')"
+        aria-label="Search infrastructure items">
+    </div>
+  </div>
+  
+  <!-- Secondary Navigation Links -->
+  <nav class="top-nav__secondary-nav" aria-label="Secondary navigation">
+    <ul class="nav-list" role="list">
+      <li class="nav-item" role="listitem">
+        <a href="/dashboard" class="nav-link" aria-current="page">Dashboard</a>
+      </li>
+      <li class="nav-item" role="listitem">
+        <a href="/inventory" class="nav-link">Inventory</a>
+      </li>
+      <li class="nav-item" role="listitem">
+        <a href="/reports" class="nav-link">Reports</a>
+      </li>
+      <li class="nav-item" role="listitem">
+        <a href="/settings" class="nav-link">Settings</a>
+      </li>
+    </ul>
+  </nav>
+  
+  <!-- User Controls Section -->
+  <div class="top-nav__user-controls">
+    
+    <!-- Notification Icon -->
+    <button 
+      class="user-control-btn"
+      type="button"
+      aria-label="View notifications"
+      (click)="onUserControlClick('notification')">
+      <span class="control-icon">🔔</span>
+    </button>
+    
+    <!-- Settings Icon -->
+    <button 
+      class="user-control-btn"
+      type="button"
+      aria-label="Open settings"
+      (click)="onUserControlClick('settings')">
+      <span class="control-icon">⚙️</span>
+    </button>
+    
+    <!-- User Avatar -->
+    <button 
+      class="user-avatar-btn"
+      type="button"
+      aria-label="Open user menu"
+      (click)="onUserControlClick('profile')">
+      <div class="user-avatar">
+        <span class="avatar-placeholder">👤</span>
+      </div>
+    </button>
+    
+  </div>
+  
+</div>
